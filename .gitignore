@@ -15,10 +15,10 @@ __pycache__/
 .ipynb_checkpoints/
 
 # Directorio de Datos (NO SUBIR DATOS A GIT POR DEFECTO)
-data/raw/
-data/interim/
-data/processed/
-data/external/
+#data/raw/
+#data/interim/
+#data/processed/
+#data/external/
 
 # Mantener la estructura de carpetas de datos aunque estén vacías
 !data/raw/.gitkeep
@@ -27,7 +27,7 @@ data/external/
 !data/external/.gitkeep
 
 # Modelos
-models/
+#models/
 !models/.gitkeep
 
 # Mac OS
