@@ -17,20 +17,9 @@ def impute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     """
     df = df.copy()
 
-    if "total_bedrooms" in df.columns and "total_rooms" in df.columns:
-        mask_valid_ratio = (
-            df["total_bedrooms"].notna() &
-            df["total_rooms"].notna() &
-            (df["total_rooms"] > 0)
-        )
 
-        ratio_median = (df.loc[mask_valid_ratio, "total_bedrooms"] /
-                        df.loc[mask_valid_ratio, "total_rooms"]).median()
-
-        mask_missing_bedrooms = df["total_bedrooms"].isna() & df["total_rooms"].notna()
-        df.loc[mask_missing_bedrooms, "total_bedrooms"] = (
-            df.loc[mask_missing_bedrooms, "total_rooms"] * ratio_median
-        )
+    if "total_bedrooms" in df.columns:
+        df = df.dropna(subset=["total_bedrooms"])
 
     return df
 
@@ -156,13 +145,14 @@ def preprocess_pipeline(df: pd.DataFrame) -> pd.DataFrame:
     df = encode_ocean_proximity(df)
 
     # 6. Crear variables logarítmicas sin eliminar las originales
+    """
     df = create_log_features(
         df,
         target="median_house_value",
         skew_threshold=1.0,
         drop_original=True
     )
-
+    """
     return df
 
 
@@ -170,8 +160,8 @@ if __name__ == "__main__":
     train_input_path = Path("data/interim/train_set.csv")
     test_input_path = Path("data/interim/test_set.csv")
 
-    train_output_path = Path("data/processed/train_features_con_log.csv")
-    test_output_path = Path("data/processed/test_features_con_log.csv")
+    train_output_path = Path("data/processed/train_features_delnull.csv")
+    test_output_path = Path("data/processed/test_features_delnull.csv")
 
     # Crear carpeta de salida si no existe
     train_output_path.parent.mkdir(parents=True, exist_ok=True)
