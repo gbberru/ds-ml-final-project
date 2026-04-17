@@ -156,13 +156,14 @@ def preprocess_pipeline(df: pd.DataFrame) -> pd.DataFrame:
     df = encode_ocean_proximity(df)
 
     # 6. Crear variables logarítmicas sin eliminar las originales
+    """"
     df = create_log_features(
         df,
         target="median_house_value",
         skew_threshold=1.0,
         drop_original=True
     )
-
+    """
     return df
 
 
@@ -170,8 +171,8 @@ if __name__ == "__main__":
     train_input_path = Path("data/interim/train_set.csv")
     test_input_path = Path("data/interim/test_set.csv")
 
-    train_output_path = Path("data/processed/train_features_con_log.csv")
-    test_output_path = Path("data/processed/test_features_con_log.csv")
+    train_output_path = Path("data/processed/train_features_sin_log.csv")
+    test_output_path = Path("data/processed/test_features_sin_log.csv")
 
     # Crear carpeta de salida si no existe
     train_output_path.parent.mkdir(parents=True, exist_ok=True)
